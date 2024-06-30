@@ -62,12 +62,12 @@ public class Servicios {
 
 	public Solucion backtracking(int tiempoLimite) {
 		Solucion solucion = new Solucion();
-		this.resolverBacktracking(this.reader.getListaTareas(), this.reader.getListaProcesadores(), tiempoLimite, solucion);
+		this.resolverBacktracking(this.reader.getListaTareas(), this.reader.getListaProcesadores(), tiempoLimite, solucion, 0);
 		return solucion;
 	}
 	
-	private void resolverBacktracking(List<Tarea> tareas, List<Procesador> procesadores, int tiempoLimite, Solucion solucion) {
-		if (tareas.isEmpty())
+	private void resolverBacktracking(List<Tarea> tareas, List<Procesador> procesadores, int tiempoLimite, Solucion solucion, int indiceTarea) {
+		if (tareas.size() == indiceTarea)
 		{
 			int tiempo_final = calcularTiempoFinal(procesadores);
 			if(solucion.isSolucion(tiempo_final))
@@ -77,21 +77,17 @@ public class Servicios {
 			}
 		}
 		else 
-		{
-			List<Tarea> tareasCopia = new ArrayList<Tarea>(tareas); 
-			for (Tarea tarea : tareas) {
-					for (Procesador procesador : procesadores) {
-							if ((procesador.getCantTareasCriticas() == 2 && !tarea.getCritica()) || (procesador.getCantTareasCriticas() < 2)) {
-									if ((!procesador.getRefrigerado() && tarea.getTiempo() <= tiempoLimite) || (procesador.getRefrigerado())) {
-											solucion.AddMetrica();
-											procesador.asignarTarea(tarea);
-											tareasCopia.remove(tarea);
-											resolverBacktracking(tareasCopia, procesadores, tiempoLimite, solucion);
-											tareasCopia.add(tarea);
-											procesador.desasignarTarea(tarea);
-									}
-							}
+		{ 
+			Tarea tarea = tareas.get(indiceTarea);
+			for (Procesador procesador : procesadores) {
+				if ((procesador.getCantTareasCriticas() == 2 && !tarea.getCritica()) || (procesador.getCantTareasCriticas() < 2)) {
+					if ((!procesador.getRefrigerado() && tarea.getTiempo() <= tiempoLimite) || (procesador.getRefrigerado())) {
+						solucion.AddMetrica();
+						procesador.asignarTarea(tarea);
+						resolverBacktracking(tareas, procesadores, tiempoLimite, solucion, indiceTarea + 1);
+						procesador.desasignarTarea(tarea);
 					}
+				}
 			}
 		}
 	}
@@ -157,3 +153,4 @@ public class Servicios {
 		return retorno;
 	}
 }
+
