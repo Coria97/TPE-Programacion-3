@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import Node.*;
@@ -16,10 +17,10 @@ public class CSVReader {
 
 	private HashMap<String, Procesador> procesadorHashMap = new HashMap<String, Procesador>();
 	private HashMap<String, Tarea> tareaHashMap = new HashMap<String, Tarea>();
-	private List<Tarea> criticas = new ArrayList<Tarea>();
-	private List<Tarea> noCriticas = new ArrayList<Tarea>();
-	private List<Tarea> tareasLista = new ArrayList<Tarea>();
-	private List<Procesador> tareasProcesadores = new ArrayList<Procesador>();
+	private List<Tarea> criticas = new LinkedList<Tarea>();
+	private List<Tarea> noCriticas = new LinkedList<Tarea>();
+	private List<Tarea> tareasLista = new LinkedList<Tarea>();
+	private List<Procesador> tareasProcesadores = new LinkedList<Procesador>();
 
 
 	public CSVReader(){
@@ -34,11 +35,11 @@ public class CSVReader {
 	}
 
 	public List<Tarea> getCriticas(){
-		return new ArrayList<Tarea>(this.criticas);
+		return new LinkedList<Tarea>(this.criticas);
 	}
 
 	public List<Tarea> getNoCriticas(){
-		return new ArrayList<Tarea>(this.noCriticas);
+		return new LinkedList<Tarea>(this.noCriticas);
 	}
 
 	public List<Tarea> getListaTareas(){
