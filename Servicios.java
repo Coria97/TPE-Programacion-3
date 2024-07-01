@@ -81,7 +81,7 @@ public class Servicios {
 			Tarea tarea = tareas.get(indiceTarea);
 			for (Procesador procesador : procesadores) {
 				if ((procesador.getCantTareasCriticas() == 2 && !tarea.getCritica()) || (procesador.getCantTareasCriticas() < 2)) {
-					if ((!procesador.getRefrigerado() && tarea.getTiempo() <= tiempoLimite) || (procesador.getRefrigerado())) {
+					if ((!procesador.getRefrigerado() && (tarea.getTiempo() + procesador.getTiempoEjecucion()) <= tiempoLimite) || (procesador.getRefrigerado())) {
 						solucion.AddMetrica();
 						procesador.asignarTarea(tarea);
 						resolverBacktracking(tareas, procesadores, tiempoLimite, solucion, indiceTarea + 1);
@@ -144,7 +144,7 @@ public class Servicios {
 		for (Procesador procesador : procesadores) {
 			solucion.AddMetrica();
 			if ((procesador.getCantTareasCriticas() == 2 && !tarea.getCritica()) || (procesador.getCantTareasCriticas() < 2))
-				if ((!procesador.getRefrigerado() && tarea.getTiempo() <= tiempoLimite) || (procesador.getRefrigerado()))
+				if ((!procesador.getRefrigerado() && (tarea.getTiempo() + procesador.getTiempoEjecucion()) <= tiempoLimite) || (procesador.getRefrigerado()))
 					if (retorno == null) 
 						retorno = procesador;
 					else if (retorno.getTiempoEjecucion() > procesador.getTiempoEjecucion())

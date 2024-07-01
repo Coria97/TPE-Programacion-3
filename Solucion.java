@@ -35,21 +35,24 @@ public class Solucion {
       this.tiempo_final_ejecucion = tiempo; 
     }
 
-    public void setProcesadores(List<Procesador> procesadores)    
-    { 
+    public void setProcesadores(List<Procesador> procesadores) {
       this.procesadores.clear();
-      for(Procesador procesador : procesadores)
-      {
+      for (Procesador procesador : procesadores) {
         Procesador procesadorAux = new Procesador(procesador.getCodigoProcesador(), 
-          procesador.getRefrigerado(), 
-          procesador.getAnio());
+                                                  procesador.getRefrigerado(), 
+                                                  procesador.getAnio());
 
-        for (Tarea tarea: procesador.getListaTareasAsignadas())
-          procesadorAux.asignarTarea(tarea);
+          for (Tarea tarea : procesador.getListaTareasAsignadas()) {
+              Tarea tareaAux = new Tarea(tarea.getNombre(), 
+                                        tarea.getTiempo(), 
+                                        tarea.getCritica(), 
+                                        tarea.getPrioridad());
+              procesadorAux.asignarTarea(tareaAux);
+          }
 
-        this.procesadores.add(procesadorAux);
+          this.procesadores.add(procesadorAux);
       }
-    }
+  }
 
     public List<Procesador> getListaProcesadores(){
 		  return new ArrayList<Procesador>(this.procesadores);

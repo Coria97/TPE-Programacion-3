@@ -58,12 +58,16 @@ public class Procesador {
 
   public void asignarTarea(Tarea tarea)
   {
+    if (tarea.getCritica())
+      this.cant_tareas_criticas++;
     this.tiempo_ejecucion += tarea.getTiempo();
     this.tareas_asignadas.add(tarea);
   }
 
   public void desasignarTarea(Tarea tarea)
   {
+    if (tarea.getCritica())
+      this.cant_tareas_criticas--;
     this.tiempo_ejecucion -= tarea.getTiempo();
     this.tareas_asignadas.remove(tarea);
   }
